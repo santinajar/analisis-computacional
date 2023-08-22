@@ -1,7 +1,7 @@
 from pgmpy.models import BayesianNetwork
 from pgmpy.factors.discrete import TabularCPD
 "sofi estuvo aca"
-
+"Cambio para pull request"
 modelo = BayesianNetwork([("C", "A"), ("U", "A")])
 
 cpd_c = TabularCPD(variable="C", variable_card=3, values=[[0.33], [0.33], [0.33]])
