@@ -1,6 +1,6 @@
 from pgmpy.models import BayesianNetwork
 from pgmpy.factors.discrete import TabularCPD
-
+"sofi estuvo aca"
 
 modelo = BayesianNetwork([("C", "A"), ("U", "A")])
 
