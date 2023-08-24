@@ -3,6 +3,8 @@ from pgmpy.factors.discrete import TabularCPD
 "sofi estuvo aca"
 "Prueba de regla de proteccion - pull request"
 
+"Nuevo comentario Por Sofia en el archivo de Santi"
+
 modelo = BayesianNetwork([("C", "A"), ("U", "A")])
 
 cpd_c = TabularCPD(variable="C", variable_card=3, values=[[0.33], [0.33], [0.33]])
