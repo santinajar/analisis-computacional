@@ -1,5 +1,7 @@
 from pgmpy.models import BayesianNetwork
 from pgmpy.factors.discrete import TabularCPD
+from pgmpy . sampling import BayesianModelSampling
+from pgmpy.estimators import MaximumLikelihoodEstimator
 
 
 modelo = BayesianNetwork([("R", "A"), ("S", "A"), ("A", "J"), ("A", "M")])
@@ -46,4 +48,26 @@ from pgmpy.inference import VariableElimination
 
 infer = VariableElimination(modelo)
 posterior_p = infer.query(["R"], evidence={"M": 1,"J":1})
-print(posterior_p)
+#print(posterior_p)
+
+
+
+
+#taller 4
+
+mod = BayesianNetwork([("R", "A"), ("S", "A"), ("A", "J"), ("A", "M")])
+
+samples = BayesianModelSampling(modelo).forward_sample(size=int(1e5))
+#print(samples.head(n=50))
+
+emv = MaximumLikelihoodEstimator(model=mod, data=samples)
+
+# Estimar para nodos sin padres
+cpdem_r = emv.estimate_cpd(node="R")
+print(cpdem_r)
+cpdem_s = emv.estimate_cpd(node="S")
+print(cpdem_s)
+
+# Estimar para nodo Alarma
+cpdem_a = emv.estimate_cpd(node="A")
+print(cpdem_a)

@@ -26,6 +26,7 @@ df = pd.DataFrame({
     "ACTIVE?": ["Positivo", "Positivo", "Positivo", "Positivo", "Negativo", "Negativo","Positivo", "Positivo", "Positivo", "Negativo", "Positivo", "Negativo"]
 })
 fig = px.bar(df, x="ILNES", y="CASES", color="ACTIVE?", barmode="group")
+erver(debug=True)
 
 app.layout = html.Div(children=[
     html.H1(children='Mi primer tablero en Dash'),
@@ -51,4 +52,4 @@ app.layout = html.Div(children=[
 )
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_s
