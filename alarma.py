@@ -2,7 +2,7 @@ from pgmpy.models import BayesianNetwork
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy . sampling import BayesianModelSampling
 from pgmpy.estimators import MaximumLikelihoodEstimator
-
+import pandas as pd
 
 modelo = BayesianNetwork([("R", "A"), ("S", "A"), ("A", "J"), ("A", "M")])
 
@@ -64,10 +64,32 @@ emv = MaximumLikelihoodEstimator(model=mod, data=samples)
 
 # Estimar para nodos sin padres
 cpdem_r = emv.estimate_cpd(node="R")
-print(cpdem_r)
+#print(cpdem_r)
 cpdem_s = emv.estimate_cpd(node="S")
-print(cpdem_s)
+#print(cpdem_s)
 
 # Estimar para nodo Alarma
 cpdem_a = emv.estimate_cpd(node="A")
-print(cpdem_a)
+#print(cpdem_a)
+
+
+mod.fit(data=samples, estimator = MaximumLikelihoodEstimator) 
+for i in mod.nodes():
+    #print(mod.get_cpds(i)) 
+    x=0
+
+from pgmpy.estimators import BayesianEstimator
+
+eby = BayesianEstimator(model=mod, data=samples)
+
+cpdby_r = eby.estimate_cpd(node="R", prior_type="dirichlet", pseudo_counts=[[2000000], [200000]])
+#print(cpdby_r)
+
+#punto 3
+
+modeloNuevo = BayesianNetwork([("ASIA", "TUB"), ("SMOKE", "LUNG"), ("SMOKE", "BRONC"), ("LUB", "EITHER"), ("LUNG", "EITHER"), ("EITHER", "XRAY"), ("EITHER", "DYSP"), ("BRONC", "DYSP")])
+df = pd.read_csv("data_asia.csv")
+#print(df)
+modeloNuevo.fit(data=df, estimator = MaximumLikelihoodEstimator) 
+for i in modeloNuevo.nodes():
+    print(modeloNuevo.get_cpds(i)) 
