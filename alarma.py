@@ -87,9 +87,27 @@ cpdby_r = eby.estimate_cpd(node="R", prior_type="dirichlet", pseudo_counts=[[200
 
 #punto 3
 
-modeloNuevo = BayesianNetwork([("ASIA", "TUB"), ("SMOKE", "LUNG"), ("SMOKE", "BRONC"), ("LUB", "EITHER"), ("LUNG", "EITHER"), ("EITHER", "XRAY"), ("EITHER", "DYSP"), ("BRONC", "DYSP")])
+# Define el modelo de red bayesiana
+modeloNuevo = BayesianNetwork([
+    ("asia", "tub"),
+    ("smoke", "lung"),
+    ("smoke", "bronc"),
+    ("lung", "either"),
+    ("bronc", "either"),
+    ("either", "xray"),
+    ("either", "dysp"),
+    ("bronc", "dysp")
+])
+
+# Carga los datos desde el archivo CSV
 df = pd.read_csv("data_asia.csv")
-#print(df)
-modeloNuevo.fit(data=df, estimator = MaximumLikelihoodEstimator) 
+
+
+# Elimina la columna "Unnamed: 0" si es necesario
+if "Unnamed: 0" in df.columns:
+    df.drop("Unnamed: 0", axis=1, inplace=True)
+
+# Ajusta el modelo utilizando MaximumLikelihoodEstimator
+modeloNuevo.fit(df, estimator=MaximumLikelihoodEstimator)
 for i in modeloNuevo.nodes():
     print(modeloNuevo.get_cpds(i)) 
