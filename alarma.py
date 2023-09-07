@@ -111,3 +111,36 @@ if "Unnamed: 0" in df.columns:
 modeloNuevo.fit(df, estimator=MaximumLikelihoodEstimator)
 for i in modeloNuevo.nodes():
     print(modeloNuevo.get_cpds(i)) 
+
+import numpy as np
+
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+
+X_train, X_test = train_test_split(df, test_size=0.30, random_state=(42))
+#print(df)
+modeloNuevo.fit(data=X_train, estimator = MaximumLikelihoodEstimator) 
+for i in modeloNuevo.nodes():
+    print(modeloNuevo.get_cpds(i)) 
+modeloNuevo.fit(data=X_test, estimator = MaximumLikelihoodEstimator) 
+for i in modeloNuevo.nodes():
+    print(modeloNuevo.get_cpds(i)) 
+
+y_true = [...]  # Etiquetas reales de los datos de prueba
+y_pred = [...]  # Predicciones de tu modelo para los datos de prueba    
+exactitud = accuracy_score(y_true, y_pred)
+    
+
+y_true = [...]  # Etiquetas reales de los datos de prueba
+y_pred = [...]  # Predicciones de tu modelo para los datos de prueba
+
+# Calcular la matriz de confusión
+confusion = confusion_matrix(y_true, y_pred)
+
+# Extraer los valores TP, FP, TN y FN de la matriz de confusión
+TP = confusion[1, 1]  # Verdaderos Positivos
+FP = confusion[0, 1]  # Falsos Positivos
+TN = confusion[0, 0]  # Verdaderos Negativos
+FN = confusion[1, 0]  # Falsos Negativos
+
+    
