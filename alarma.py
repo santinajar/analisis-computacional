@@ -111,7 +111,7 @@ if "Unnamed: 0" in df.columns:
 modeloNuevo.fit(df, estimator=MaximumLikelihoodEstimator)
 for i in modeloNuevo.nodes():
     print(modeloNuevo.get_cpds(i)) 
-
+"""""
 import numpy as np
 
 from sklearn.model_selection import train_test_split
@@ -143,4 +143,41 @@ FP = confusion[0, 1]  # Falsos Positivos
 TN = confusion[0, 0]  # Verdaderos Negativos
 FN = confusion[1, 0]  # Falsos Negativos
 
+"""""
+from pgmpy.models import BayesianNetwork
+from pgmpy.factors.discrete import TabularCPD
+from pgmpy . sampling import BayesianModelSampling
+from pgmpy.estimators import MaximumLikelihoodEstimator
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn.metrics import accuracy_score, confusion_matrix
+
+x_train, x_test, y_train, y_test = train_test_split(df.drop('lung', axis=1), df['lung'], test_size=0.30, random_state=50)
+#print(df)
+#modeloNuevo.fit(data=x_train, estimator = MaximumLikelihoodEstimator) 
+#for i in modeloNuevo.nodes():
+    #print(modeloNuevo.get_cpds(i)) 
+#modeloNuevo.fit(data=x_test, estimator = MaximumLikelihoodEstimator) 
+#for i in modeloNuevo.nodes():
+   # print(modeloNuevo.get_cpds(i)) 
+X = df.drop('lung', axis=1)
+y = df['lung']
+y_pred = modeloNuevo.predict(x_test)  # Predicciones de tu modelo para los datos de prueba    
+exactitud = accuracy_score(y_test, y_pred)
     
+
+matriz_confusion = confusion_matrix(y_test, y_pred)
+
+tp = matriz_confusion[1, 1] #verdaderos positivos
+fp = matriz_confusion[0, 1]  #falsos positivos
+tn = matriz_confusion[0, 0]  #verdaderos negarivos
+fn = matriz_confusion[1, 0]  #flasos negarivos
+
+# Imprimir los resultados
+print(exactitud)
+print(tp)
+print(fp)
+print(tn)
+print(fn)
+
