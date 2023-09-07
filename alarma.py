@@ -175,9 +175,9 @@ tn = matriz_confusion[0, 0]  #verdaderos negarivos
 fn = matriz_confusion[1, 0]  #flasos negarivos
 
 # Imprimir los resultados
-print(exactitud)
-print(tp)
-print(fp)
-print(tn)
-print(fn)
+print(exactitud, " exactitud")
+print(tp, " verdaderos positivos")
+print(fp, " falsos positivos")
+print(tn, " verdaderos negativos")
+print(fn, " falsos negativos")
 
